@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SocketServer</title>
+</head>
+<body>
+
+    <h1>Acceso denegado</h1>
+
+    <script src="socket.io/socket.io.js"></script>
+    
+    <script>
+        //Socket del lado del cliente, DISTINTO AL SOCKET DEL LADO DEL SERVIDOR
+        var socket = io();
+        //Mediante io, emito a todos los clientes conectados al Socket Server
+        //Mediante on, el cliente escucha los mensajes que se emiten desde el server
+        //Realizo la conexión Cliente - Servidor
+        socket.on( 'connect', function() {
+            console.log('Conectado al servidor');
+        });
+
+        //Realizamos la desconexión del Cliente por parte del Servidor
+        socket.on('disconnect', function() {
+            console.log('Se ha perdido la conexión con el servidor');
+        });
+
+        //Emisión de un evento
+        //Primer argumento, nombre del evento que se emite
+        //Segundo argumento, payload que contiene la información que deseamos emitir, mediante un objeto literal
+        socket.emit( 'message', { name: 'Daniel' } );
+
+        //Escuchamos el mensaje de un evento cuando el servidor lo emite
+        //Segundo argumento, payload que contiene la información del mensaje que se envía al recpetor mediante el evento
+        //Cuando se recibe un mensaje, se dispara el callback con eñ payload
+        socket.on( 'message', function( payload ){
+            console.log('Escuchando:', payload );
+        });
+
+
+    </script>
+    
+</body>
+</html>
