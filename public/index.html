@@ -35,8 +35,15 @@
         //Escuchamos el mensaje de un evento cuando el servidor lo emite
         //Segundo argumento, payload que contiene la información del mensaje que se envía al recpetor mediante el evento
         //Cuando se recibe un mensaje, se dispara el callback con eñ payload
-        socket.on( 'message', function( payload ){
+        socket.on( 'new-message', function( payload ){
             console.log('Escuchando:', payload );
+        });
+
+        //Escuchamos el evento de active-bands cuando lo emita el servidor
+        socket.on('active-bands', function( bands ){
+            console.clear();
+            //Mostramos las bandas en formato de tabla
+            console.table( bands );
         });
 
 
