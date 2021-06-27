@@ -17,3 +17,4 @@ class Band {
 
 //Exportamos la clase
 module.exports = Band;
+

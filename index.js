@@ -1,11 +1,24 @@
 //Importación express
-const express     = require('express');
+const express = require('express');
 //Importamos el path en Express
-const path        = require('path');
+const path = require('path');
 //Implementamos el dotenv mediante config(), que permite leer las variables de entorno
 require('dotenv').config();
+
+//DB Config
+const { dbConnection } = require('./database/config');
+
+
 //App de Express
-const app         = express();
+const app = express();
+//Database
+dbConnection();
+
+//Express(), permite recibir la información que proviene de un POST
+//Peticiones al body, necesitamos parsear el body
+//Lectura y parseo del body, hay que pasarlo por otro Middleware
+//Middleware, función que se ejecuta cuando la función pasa por el express
+app.use( express.json() );
 
 //Definición del Node Server para Sockets
 const server      = require('http').createServer(app);
@@ -18,9 +31,17 @@ require('./sockets/socket');
 //Carpeta pública
 //__dirname, apunta hacia el path donde está montado el servidor, en este caso el directorio public
 const publicPath = path.resolve( __dirname, 'public' );
-
 //Indicamos el server Express que implemente el publicPath cuando se realice la petición
 app.use( express.static( publicPath ) );
+
+
+//CONFIGURACIÓN DE RUTAS
+
+//Implementamos el middleware, especifico la ruta donde quiero habilitar el endpoint para el Login y Registro
+//Segundo argumento, path al que respondo al hacer la petición
+app.use('/api/login', require('./routes/auth') );
+//Ruta
+//app.use('/api/events', require('./routes/events') );
 
 //Escuchar peticiones del Servidor Express mediante el listen()
 //Primer argumento, indicamos el puerto donde escuchamos la petición
