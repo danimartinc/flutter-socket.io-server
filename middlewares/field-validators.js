@@ -13,7 +13,7 @@ const validateFields = ( req, res = response, next ) => {
     const errors = validationResult( req );
 
     //Si hay errores, es decir el array de errors no está vacio, hay un campo que es requerido
-    if( !errors.isEmpty()){
+    if( !errors.isEmpty() ){
         return res.status(400).json({
             ok: false,
             errors: errors.mapped()

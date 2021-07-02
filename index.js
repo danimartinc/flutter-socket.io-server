@@ -40,8 +40,10 @@ app.use( express.static( publicPath ) );
 //Implementamos el middleware, especifico la ruta donde quiero habilitar el endpoint para el Login y Registro
 //Segundo argumento, path al que respondo al hacer la petición
 app.use('/api/login', require('./routes/auth') );
-//Ruta
-//app.use('/api/events', require('./routes/events') );
+//Ruta para la lista de usuarios
+app.use('/api/users', require('./routes/users') );
+//Ruta para la listado de mensajes
+app.use('/api/messages', require('./routes/messages') );
 
 //Escuchar peticiones del Servidor Express mediante el listen()
 //Primer argumento, indicamos el puerto donde escuchamos la petición

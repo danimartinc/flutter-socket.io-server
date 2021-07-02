@@ -1,8 +1,9 @@
 //Controllers, funciones que tengo definidas en las peticiones de mis rutas
 
-const { response }   = require('express');
-const User           = require('../models/User');
-const bcrypt         = require('bcryptjs');
+const { response }    = require('express');
+const bcrypt          = require('bcryptjs');
+
+const User            = require('../models/User');
 const { generateJWT } = require('../helpers/jwt');
 
 

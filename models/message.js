@@ -1,48 +1,47 @@
-//Modelo de usuario
+//Modelo para el mensaje del Chat
 const { Schema, model } = require('mongoose');
 
 //UsuarioSchema, nos permite para estableces los campos que queremos almacenar
 //El equivalente a las columnas de las entidades en una base de datos relacional
-const UserSchema = new Schema({
+const MessageSchema = new Schema({
 
-    name: {
-        type: String,
+    from: {
+        //Tipo objeto de la database
+        type: Schema.Types.ObjectId,
+        //Referencia al modelo
+        ref: 'User',
         //Indicamos que es un campo obligatorio
         required: true
     },
-    email: {
-        type: String,
+    for: {
+        //Tipo objeto de la database
+        type: Schema.Types.ObjectId,
+        //Referencia al modelo
+        ref: 'User',
         //Indicamos que es un campo obligatorio
         required: true,
-        //Indicamos que tiene que tener un valor único
-        unique: true
     },
-    password: {
+    message: {
         type: String,
         //Indicamos que es un campo obligatorio
         required: true
-    },
-    //Si online está en true o false, indica si el usuario está online/offline
-    online: {
-        type: Boolean,
-        //Por defecto, cuando creo el usuario es false, cuando se conecta el usuario es true
-        default: false
     }
 
+    //Fecha de la base de datos
+}, {
+        timestamps: true
 });
 
 //Método que permite serializar el usuario, ya que lo envio a un Servicio REST, y que este se devuelva en formato JSON
-UserSchema.method('toJSON', function(){
+MessageSchema.method('toJSON', function(){
     //Se extraen mediante desestructuración, los parámetros del objeto User
     //__v, versión que genera internamente Mongoose
     //id_, ID de la database que genera Mongoose
     //El resto de propiedades las almaceno en un objeto llamado Object
-    const { __v, _id, password, ...object } = this.toObject();
-    //Le asigno al Object la propiedad UID, renombrando al _id
-    object.uid = _id;
+    const { __v, _id, ...object } = this.toObject();
     return object;
 });
 
 //Exportamos el modelo
 //Segundo argumento, esquema que hemos definido
-module.exports = model('User', UserSchema );
+module.exports = model('Message', MessageSchema );

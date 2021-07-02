@@ -2,6 +2,7 @@
 //JWT trabaja con callbacks y no con promesas
 const jwt = require('jsonwebtoken');
 
+
 //Función que permite generar un JWT para cada usuario
 //Recibo por argumento el uid y name, que se coloca en el payload del Token
 const generateJWT = ( uid, name ) => {
@@ -46,19 +47,17 @@ const checkJWT = ( token = '' ) => {
         //Si no hace match(), se dispara el catch
         const { uid } = jwt.verify( token, process.env.JWT_KEY );
 
-        //Si hace match, se retorna en la primera posición del array, un ture, todo esta correcto.
-        //En la segunda posición, devolvemos el UID
-        return [ true, uid ];
-        
+        //Si hace match, se retorna en la primera posición del array, un true, todo esta correcto.
+        //En la segunda posición, devolvemos el UID para conocer que usuario se está conectando
+        return [ true, uid ];    
     } catch (error) {
         //Devolvemos el UID en null
-        return [ false, null ];
-        
+        return [ false, null ];      
     }
     
 }
 
 module.exports = {
-    //checkJWT,
+    checkJWT,
     generateJWT,
 }

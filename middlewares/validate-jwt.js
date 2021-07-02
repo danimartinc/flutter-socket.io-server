@@ -40,7 +40,7 @@ const validateJWT = ( req, res = response, next) => {
         
     }
 
-     //Next(), callback el cual llamamos de manera condicional, cuando no existe ningun error
+    //Next(), callback el cual llamamos de manera condicional, cuando no existe ningun error
     //Indica que continue con el siguiente middleware o dispare el conroller
     next();
 
